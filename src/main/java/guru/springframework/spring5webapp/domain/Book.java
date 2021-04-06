@@ -3,6 +3,7 @@ package guru.springframework.spring5webapp.domain;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 
 
@@ -22,8 +24,11 @@ public class Book {
 
 	private String title;
 	private String isbn;
+	
+	@ManyToOne
+	private Publisher publisher;
 
-	@ManyToMany           // need to define join table properties as well
+	@ManyToMany           // need to define join table properties as well for manay to many, for many to one -only join columns
 	@JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
 	private Set<Author> authors= new HashSet<>();
 
@@ -36,6 +41,16 @@ public class Book {
 		this.title = title;
 		this.isbn = isbn;
 		
+	}
+	
+	
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
 	}
 
 	public Long getId() {
@@ -72,7 +87,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + ", authors=" + authors + "]";
+		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + "]";
 	}
 
 	@Override              //for setting up equality for id field to be used by hibernate
