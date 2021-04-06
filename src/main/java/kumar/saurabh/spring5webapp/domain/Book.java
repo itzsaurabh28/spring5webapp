@@ -1,4 +1,4 @@
-package guru.springframework.spring5webapp.domain;
+package kumar.saurabh.spring5webapp.domain;
 
 import java.util.HashSet;
 import java.util.Set;
